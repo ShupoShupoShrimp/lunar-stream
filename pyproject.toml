@@ -7,7 +7,13 @@ authors = [
     { name = "ShupoShupo Shrimp", email = "markivans2525@gmail.com" }
 ]
 requires-python = ">=3.12"
-dependencies = []
+dependencies = [
+    "hdrhistogram>=0.10.8",
+    "openai>=3.41.0",
+    "soundfile>=0.14.0",
+    "tiktoken>=0.14.0",
+    "websockets>=17.3",
+]
 
 [project.scripts]
 lunar-stream = "tsukuyomi:main"
@@ -15,3 +21,31 @@ lunar-stream = "tsukuyomi:main"
 [build-system]
 requires = ["uv_build>=0.12.23,<0.13.0"]
 build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-name = "tsukuyomi"
+
+[dependency-groups]
+dev = [
+    "async-solipsism>=0.10",
+    "hypothesis>=6.170.14",
+    "import-linter>=2.15",
+    "mypy>=2.4.1",
+    "pytest>=9.2.0",
+    "pytest-asyncio>=1.4.1",
+    "ruff>=0.17.3",
+]
+
+[tool.mypy]
+strict = true
+python_version = "3.12"
+files = ["src", "labs", "tests", "tools", "bench"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+src = ["src", "apps", "labs", "tests", "bench"]
