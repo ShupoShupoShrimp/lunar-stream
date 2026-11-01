@@ -1,0 +1,102 @@
+# python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+sdist/
+wheels/
+*.egg-info/
+*.egg
+.eggs/
+
+# virtualenvs
+.venv/
+venv/
+env/
+.python-environment/
+
+# test / lint / type caches
+.pytest_cache/
+.benchmarks/
+.hypothesis/
+.mutmut-cache
+.mypy_cache/
+.pyre/
+.pytype/
+.ruff_cache/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+nosetests.xml
+.tox/
+.cache/
+
+# regenerable intermediates
+bench/out/
+
+# models & checkpoints
+*.onnx
+*.ort
+models/
+.checkpoints/
+
+# cassette audio blobs (keeps .jsonl metadata committed)
+tests/cassettes/blobs/
+tests/cassettes/**/*.bin
+.artifacts/
+
+# secrets
+.env
+.env.*
+!.env.example
+secrets/
+tokens/
+*.pem
+*.key
+*.p12
+settings.local.yaml
+config/local.yaml
+
+# logs / scratch / OS dumps
+*.log
+logs/
+scratch/
+tmp/
+*.tmp
+*.pid
+*.sock
+/core
+/core.[0-9]*
+*.dmp
+
+# local db state
+.pgdata/
+pgdata/
+redisdata/
+*.db
+*.sqlite3
+
+# web
+node_modules/
+web/console/dist/
+web/console/node_modules/
+
+# notebooks
+.ipynb_checkpoints/
+
+# editors / os / agent IDEs
+.idea/
+.vscode/
+*.iml
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+.claude/
+.cursor/
+.continue/
