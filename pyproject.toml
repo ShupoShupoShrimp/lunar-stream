@@ -8,6 +8,8 @@ authors = [
 ]
 requires-python = ">=3.12"
 dependencies = [
+    "dotenv>=0.9.9",
+    "groq>=1.7.0",
     "hdrhistogram>=0.10.8",
     "openai>=3.41.0",
     "soundfile>=0.14.0",
