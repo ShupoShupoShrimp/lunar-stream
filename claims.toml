@@ -1,0 +1,31 @@
+[claims.C01]
+name = "Time To First Audio"
+description = "Measures the time from request submission to the first non-silent content audio frame."
+
+metric = "ttfa"
+unit = "milliseconds"
+percentiles = ["p50", "p95"]
+
+target_p50_ms = 500
+target_p95_ms = 800
+
+sample_size_report = 500
+sample_size_certify = 2000
+
+producer = "bench/ttfa_probe.py"
+raw_data = "bench/data/ttfa_cp.jsonl"
+evidence = "bench/out/C01.json"
+reproduce = "make reproduce CLAIM=C01"
+
+status_floor = "reported"
+
+
+[gates.G01]
+name = "unit_and_property_tests"
+description = "all units and property tests must pass"
+
+command = ["uv", "run", "pytest", "tests/unit", "tests/property"]
+
+metric = "exit_code"
+op = "eq"
+value = 0
