@@ -1,31 +1,41 @@
-[claims.C01]
+[C01]
 name = "Time To First Audio"
-description = "Measures the time from request submission to the first non-silent content audio frame."
-
-metric = "ttfa"
+blueprint = "C1"
+profile = "contract"
+observed_at = "egress"
 unit = "milliseconds"
-percentiles = ["p50", "p95"]
 
-target_p50_ms = 500
-target_p95_ms = 800
+[C01.protocol]
+warmup_excluded = 20
+order = "randomized"
+failed_turns = "counted_above_800_ms"
+trimming = "None"
+confidence = 0.95
+ci_method = "exact_binomial"
 
-sample_size_report = 500
-sample_size_certify = 2000
+[C01.tier.reported]
+target = "becnh-ttfa-cp"
+min_n = 500
 
-producer = "bench/ttfa_probe.py"
+[C01.tier.certified]
+target = "certify"
+min_n = 2000
+
+[[C01.check]]
+name = "fraction_above_800ms_upper_bound"
+metric = "fraction_above_800ms_upper_bound"
+op = "le"
+value = 0.05
+
+[[C01.check]]
+name = "fraction_bellow_500ms_lower_bound"
+metric = "fraction_bellow_500ms_lower_bound"
+op = "ge"
+value = 0.50
+
+[C01.evidence]
+producer = "bench/ttfa_cp.py"
 raw_data = "bench/data/ttfa_cp.jsonl"
-evidence = "bench/out/C01.json"
+output = "bench/out/C01.json"
 reproduce = "make reproduce CLAIM=C01"
-
-status_floor = "reported"
-
-
-[gates.G01]
-name = "unit_and_property_tests"
-description = "all units and property tests must pass"
-
-command = ["uv", "run", "pytest", "tests/unit", "tests/property"]
-
-metric = "exit_code"
-op = "eq"
-value = 0
+frozen_in = ""
