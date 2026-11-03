@@ -14,7 +14,7 @@ confidence = 0.95
 ci_method = "exact_binomial"
 
 [C01.tier.reported]
-target = "becnh-ttfa-cp"
+target = "bench-ttfa-cp"
 min_n = 500
 
 [C01.tier.certified]
