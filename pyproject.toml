@@ -41,18 +41,62 @@ dev = [
 [tool.mypy]
 strict = true
 python_version = "3.12"
-files = ["src", "labs", "tests", "tools", "bench"]
+files = ["src", "labs", "tests", "tools"]
+plugins = ["pydantic.mypy"]
+warn_unreachable = true
+untyped_calls_exclude = ["onnxruntime"]
+enable_error_code = [
+  "ignore-without-code", "possibly-undefined", "redundant-expr",
+  "truthy-bool", "unused-awaitable",
+]
+
+[tool.pydantic-mypy]
+init_forbid_extra = true
+init_typed = true
+warn_required_dynamic_aliases = true
+
+[[tool.mypy.overrides]]
+module = ["onnxruntime.*", "silero_vad.*"]
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = ["tsukuyomi.core.*", "tsukuyomi.domain.*", "tsukuyomi.ports.*"]
+disallow_any_unimported = true
+
+[[tool.mypy.overrides]]
+module = ["tests.*"]
+disallow_untyped_defs = false
+disallow_incomplete_defs = false
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
 pythonpath = ["."]
 testpaths = ["tests"]
 
+[tool.pyright]
+include = ["src", "tools", "tests"]
+extraPaths = ["."]
+
 [tool.ruff]
 target-version = "py312"
 line-length = 100
 src = ["src", "apps", "labs", "tests", "bench"]
 
-[tool.pyright]
-include = ["src", "tools", "tests"]
-extraPaths = ["."]
+[tool.ruff.lint]
+select = ["E","W","F","B","C4","SIM","UP","I","RUF","ASYNC","PERF","N","PTH",
+          "S","TCH","TRY","D","ARG","PLE","PLW","PLC","ANN401","BLE","T20","PT"]
+ignore = ["E501","TRY003","D100","D101","D102","D103","D104","D105","D107"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101","ARG","D"]
+"**/resilience/**" = ["S311"]
+"**/pipeline/normalizer.py" = ["RUF001","RUF002","RUF003"]
+"scripts/**" = ["T201"]
+"tools/claims.py" = ["T201"]
+
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.flake8-type-checking]
+runtime-evaluated-base-classes = ["pydantic.BaseModel"]
