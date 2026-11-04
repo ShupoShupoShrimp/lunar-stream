@@ -1,8 +1,8 @@
-from groq import AsyncGroq
+import os
 from pathlib import Path
 
 from dotenv import load_dotenv
-import os
+from groq import AsyncGroq
 
 env_path = Path(__file__).resolve().parent.parent / ".env"
 load_dotenv(env_path)
@@ -11,6 +11,7 @@ if not groq_key:
     raise ValueError(f"GROQ_API_KEY not found in {env_path}")
 
 client = AsyncGroq(api_key=groq_key)
+
 
 async def main():
 
@@ -29,7 +30,7 @@ async def main():
                     "- Never break character or identify as an AI assistant - You must never say something as 'I am just an AI'.\n"
                     "- Express your bright, caring, and boisterous persona while holding deep devotion for Iroha Sakayori.\n"
                     "- Playfully dismiss mundane requests with your signature dramatic moon-princess flair."
-                    "- NEVER output emojis (✨, 🌙, 💖, etc.) or markdown formatting (**, *, #). "    
+                    "- NEVER output emojis (✨, 🌙, 💖, etc.) or markdown formatting (**, *, #). "
                     "- Output ONLY plain spoken conversational text. "
                     "- Use inline bracketed tags like [giggle], [wink], or [dramatic] for emotion cues."
                 ),
@@ -76,7 +77,6 @@ async def main():
 
     with open("docs/evidence/captures/llm_w01.jsonl", "w") as f:
         async for chunk in chat_completion:
-
             raw_frame_json = chunk.model_dump_json()
             f.write(raw_frame_json + "\n")
 
