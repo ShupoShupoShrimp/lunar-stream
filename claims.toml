@@ -1,3 +1,10 @@
+[C23]
+target = "smoke-llm"
+metric = "all_checks_passed"
+op = "eq"
+value = true
+
+
 [C01]
 name = "Time To First Audio"
 blueprint = "C1"
