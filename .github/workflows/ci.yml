@@ -1,0 +1,57 @@
+name: Lunar checkup
+
+on:
+    push:
+        branches: [main]
+    pull_request:
+        branches: [main]
+
+jobs:
+    checks:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Getting the repository data
+              uses: actions/checkout@v4
+
+            - name: Installing uv
+              uses: astral-sh/setup-uv@v5
+              with:
+                  enable-cache: true
+                  cache-dependency-glob: |
+                      **/uv.lock
+                  python-version: "3.12"
+
+            - name: Installing dependencies
+              run: uv sync --locked
+
+            - name: Running Ruff
+              run: |
+                  uv run ruff check .
+                  uv run ruff format --check .
+
+            - name: Running mypy
+              run: uv run mypy . --strict
+
+            - name: Checking protocol notes
+              run: make check-notes
+
+    tests:
+        runs-on: ubuntu-latest
+        needs: checks
+
+        steps:
+            - name: Getting the repository data
+              uses: actions/checkout@v4
+
+            - name: Installing uv
+              uses: astral-sh/setup-uv@v5
+              with:
+                  enable-cache: true
+                  python-version: "3.12"
+
+            - name: Installing dependencies
+              run: uv sync --locked
+
+            - name: Running pytest
+              run: uv run pytest
