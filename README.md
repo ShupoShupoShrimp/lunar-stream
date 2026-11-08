@@ -1,5 +1,13 @@
 # LunarStream
 
+> **Status:** Paused (Archived November 2026)
+
+LunarStream was designed as an ambitious, hands-on, Python-only engineering roadmap for building a real-time conversational AI and multimodal voice agent system. 
+
+However, due to a shift in project direction and architectural focus, development has been paused.
+
+
+---
 > **Sub-500 ms Real-Time Voice AI & Multimodal Agent Framework**  
 > *Core Runtime Engine: `tsukuyomi`*
 
